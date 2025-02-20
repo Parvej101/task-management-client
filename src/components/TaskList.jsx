@@ -1,44 +1,32 @@
-
-import { useState } from 'react';
+import { useDrop } from 'react-dnd';
 import TaskCard from './TaskCard';
 
+const ItemType = 'TASK';
 
-const TaskList = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: 'Task 1', description: 'Description 1' },
-    { id: 2, title: 'Task 2', description: 'Description 2' },
-    // Add more tasks as needed
-  ]);
-
-  const moveTask = (fromIndex, toIndex) => {
-    const updatedTasks = [...tasks];
-    const [movedTask] = updatedTasks.splice(fromIndex, 1);
-    updatedTasks.splice(toIndex, 0, movedTask);
-    setTasks(updatedTasks);
-  };
-
-  const handleTaskUpdate = (taskId) => {
-    // Implement task update logic here
-    console.log(`Update task with id: ${taskId}`);
-  };
-
-  const handleTaskDelete = (taskId) => {
-    // Implement task delete logic here
-    console.log(`Delete task with id: ${taskId}`);
-  };
+const TaskList = ({ category, tasks, moveTask, onTaskUpdate, onTaskDelete }) => {
+  const [, drop] = useDrop(() => ({
+    accept: ItemType,
+  }));
 
   return (
-    <div>
-      {tasks.map((task, index) => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          index={index}
-          moveTask={moveTask}
-          onTaskUpdate={handleTaskUpdate}
-          onTaskDelete={handleTaskDelete}
-        />
-      ))}
+    <div ref={drop} className="bg-gray-100 p-4 rounded-lg shadow-md min-h-[200px]">
+      <h2 className="text-lg font-bold text-gray-700 mb-3">{category}</h2>
+      <div className="space-y-3">
+        {tasks.length > 0 ? (
+          tasks.map((task, index) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              index={index}
+              moveTask={moveTask}
+              onTaskUpdate={onTaskUpdate}
+              onTaskDelete={onTaskDelete}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No tasks in this category.</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -33,8 +33,8 @@ const Dashboard = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Task Management</h1>
-      <div className="grid grid-cols-3 gap-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Task Management</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {Object.entries(categorizedTasks).map(([category, tasks]) => (
           <TaskList
             key={category}
