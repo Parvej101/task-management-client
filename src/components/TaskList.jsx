@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useDrop } from 'react-dnd';
 import TaskCard from './TaskCard';
 
